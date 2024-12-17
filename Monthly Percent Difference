@@ -1,0 +1,3 @@
+with t as(
+select date_format(created_at,'%Y-%m') as date_m,sum(value) as t_value from sf_transactions group by date_format(created_at,'%Y-%m'))
+select date_m,round(((lag(t_value) over(order by date_m) - t_value)/t_value)*100,2) from t;
